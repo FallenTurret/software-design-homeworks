@@ -1,0 +1,24 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'ru.itmo.sd'
+version = '1'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompile "org.testcontainers:testcontainers:1.15.2"
+    testCompile "org.testcontainers:junit-jupiter:1.15.2"
+}
+
+test {
+    useJUnitPlatform()
+}

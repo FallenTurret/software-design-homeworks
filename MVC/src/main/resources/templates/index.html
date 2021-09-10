@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lists of things to do</title>
+</head>
+<body>
+<span>
+    <th:block th:each="l, iter: ${lists}">
+        <table>
+            <tr>
+                <td><h3 th:text="${l.getName()}"></h3></td>
+            </tr>
+            <tr th:each="thing, iter2: ${l.getList()}">
+                <td th:text="${thing.getName()}"/>
+                <td>
+                    <span th:if="${thing.isDone()}">
+                        <label>Done</label>
+                    </span>
+                    <form th:unless="${thing.isDone()}" method="get" th:action="@{/mark-as-done/__${iter.index}__/__${iter2.index}__}">
+                        <input type="submit" value="Mark as done">
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <form method="post" th:action="@{/add-thing-to-do/__${iter.index}__}" th:object="${thingToDo}">
+            <table>
+                <tr>
+                    <td><label><input type="text" th:field="*{name}"/></label></td>
+                    <td><input type="submit" value="Add to list"></td>
+                </tr>
+            </table>
+        </form>
+        <form method="get" th:action="@{/delete-list/__${iter.index}__}">
+            <input type="submit" value="Delete list">
+        </form>
+    </th:block>
+</span>
+<form method="post" action="/add-list" th:object="${list}">
+    <table>
+        <tr>
+            <td><label>List name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+    </table>
+    <input type="submit" value="Add list">
+</form>
+</body>
+</html>
